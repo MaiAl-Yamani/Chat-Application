@@ -23,22 +23,36 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 // Routes
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
-app.use('/uploads', express.static('uploads')); // Serve profile picture files
+app.use('/uploads', express.static('uploads'));
+
+// API route to list active rooms
+app.get('/rooms', (req, res) => {
+  const activeRooms = Object.entries(rooms).map(([roomName, members]) => ({
+    room: roomName,
+    members: Array.from(members),
+  }));
+  res.json({ rooms: activeRooms });
+});
 
 // Create HTTP server
 const server = http.createServer(app);
 
 // Initialize WebSocket server
 const wss = new WebSocket.Server({ server });
-const clients = {}; // Track connected WebSocket clients
-const rooms = {};   // Track users in specific rooms
+const clients = {};
+const rooms = {};
 
-wss.on('connection', (ws, req) => {
+wss.on('connection', (ws) => {
   console.log('WebSocket connection established');
 
   ws.on('message', async (message) => {
     try {
       const data = JSON.parse(message);
+
+      // Echo Test
+      if (data.type === 'echo') {
+        ws.send(JSON.stringify({ type: 'echo_response', data: data.payload }));
+      }
 
       if (data.type === 'auth') {
         const token = data.token;
