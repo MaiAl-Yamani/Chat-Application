@@ -14,7 +14,6 @@ A real-time chat application built with **Node.js**, **Express**, **WebSockets**
 - [File Uploads](#file-uploads)  
 - [Docker Deployment](#docker-deployment)  
 - [Contributing](#contributing)  
-- [License](#license)
 
 ---
 
@@ -231,13 +230,6 @@ A real-time chat application built with **Node.js**, **Express**, **WebSockets**
 3. **Commit** your changes: `git commit -m "Add a new feature"`  
 4. **Push** to the branch: `git push origin feature/my-feature`  
 5. **Open** a Pull Request  
-
----
-
-## **License**
-
-This project is licensed under the **[MIT License](LICENSE)**. You’re free to use and adapt this code.  
-For more details, see the [LICENSE](LICENSE) file.
 
 ---
 
